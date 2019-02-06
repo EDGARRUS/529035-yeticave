@@ -83,11 +83,10 @@ $catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy
         <ul class="promo__list">
             <!--заполните этот список из массива категорий-->
             <li class="promo__item promo__item--boards">
-                <?php while($index < $num_count): ?>
-                <a class="promo__link" href="pages/all-lots.html"><?php print($catalog_easy[$index]); ?></a>
+                <?php foreach($catalog_easy as $value): ?>
+                <a class="promo__link" href="pages/all-lots.html"><?php print($value); ?></a>
             </li>
-            <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </section>
     <section class="lots">
@@ -125,13 +124,11 @@ $catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <?php $index = 0 ?>
-            <?php while($index < $num_count): ?>
+            <?php foreach($catalog_easy as $value): ?>
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?php print($catalog_easy[$index]); ?></a>
+                <a href="pages/all-lots.html"><?php print($value); ?></a>
             </li>
-                <?php $index = $index + 1; ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
