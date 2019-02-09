@@ -1,4 +1,16 @@
 <?php
+
+function format_price($right_price) {
+
+    $right_price = ceil($right_price);
+
+    if($right_price > 1000) {
+        $right_price = number_format($right_price,0,""," ");
+    }
+    $right_price .= " &#8381;";
+    return $right_price;
+}
+
 $is_auth = rand(0, 1);
 
 $user_name = 'EDUARD'; // укажите здесь ваше имя
@@ -10,42 +22,42 @@ $num_count = count($catalog_easy);
 $Rossignol = [
     "name" => "2014 Rossignol District Snowboard",
     "cat" => "Доски и лыжи",
-    "price" => "10999",
+    "price" => 10999,
     "img" => "img/lot-1.jpg",
     ];
 
 $Ply = [
     "name" => "DC Ply Mens 2016/2017 Snowboard",
     "cat" => "Доски и лыжи",
-    "price" => "159999",
+    "price" => 159999,
     "img" => "img/lot-2.jpg",
     ];
 
 $Union = [
     "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
     "cat" => "Крепления",
-    "price" => "8000",
+    "price" => 8000,
     "img" => "img/lot-3.jpg",
     ];
 
 $Charocal_bot = [
     "name" => "Ботинки для сноуборда DC Mutiny Charocal",
     "cat" => "Ботинки",
-    "price" => "10999",
+    "price" => 10999,
     "img" => "img/lot-4.jpg",
     ];
 
 $Charocal_cur = [
     "name" => "Куртка для сноуборда DC Mutiny Charocal",
     "cat" => "Одежда",
-    "price" => "7500",
+    "price" => 7500,
     "img" => "img/lot-5.jpg",
     ];
 
 $Canopy = [
     "name" => "Маска Oakley Canopy",
-    "cat" => "Hfpyjt",
-    "price" => "5400",
+    "cat" => "Разное",
+    "price" => 5400,
     "img" => "img/lot-6.jpg",
     ];
 
@@ -127,7 +139,7 @@ $catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy
                       <div class="lot__state">
                           <div class="lot__rate">
                               <span class="lot__amount">Стартовая цена</span>
-                              <span class="lot__cost"><?php echo $value["price"];?><b class="rub">р</b></span>
+                              <span class="lot__cost"><?php echo format_price($value["price"]);?></span>
                           </div>
                           <div class="lot__timer timer">
                               12:23
