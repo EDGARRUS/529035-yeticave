@@ -31,7 +31,7 @@
                             <span class="lot__cost"><?php echo htmlspecialchars(format_price($value["price"]));?></span>
                         </div>
                         <div class="lot__timer timer">
-                            12:23
+                            <?php echo $value["live"]; ?>
                         </div>
                     </div>
                 </div>

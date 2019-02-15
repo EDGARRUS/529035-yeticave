@@ -28,6 +28,12 @@ function include_template($name, $data) {
     return $result;
 }
 
+date_default_timezone_set("Europe/Moscow");
+$dt_end = date_create("tomorrow");
+$dt_now = date_create("now");
+$dt_diff = date_diff($dt_end, $dt_now);
+$dt_format = date_interval_format($dt_diff, "%H:%I");
+
 $is_auth = rand(0, 1);
 
 $user_name = 'EDUARD'; // укажите здесь ваше имя
@@ -41,6 +47,7 @@ $Rossignol = [
     "cat" => "Доски и лыжи",
     "price" => 10999,
     "img" => "img/lot-1.jpg",
+    "live" => $dt_format,
 ];
 
 $Ply = [
@@ -48,6 +55,7 @@ $Ply = [
     "cat" => "Доски и лыжи",
     "price" => 159999,
     "img" => "img/lot-2.jpg",
+    "live" => $dt_format,
 ];
 
 $Union = [
@@ -55,6 +63,7 @@ $Union = [
     "cat" => "Крепления",
     "price" => 8000,
     "img" => "img/lot-3.jpg",
+    "live" => $dt_format,
 ];
 
 $Charocal_bot = [
@@ -62,6 +71,7 @@ $Charocal_bot = [
     "cat" => "Ботинки",
     "price" => 10999,
     "img" => "img/lot-4.jpg",
+    "live" => $dt_format,
 ];
 
 $Charocal_cur = [
@@ -69,6 +79,7 @@ $Charocal_cur = [
     "cat" => "Одежда",
     "price" => 7500,
     "img" => "img/lot-5.jpg",
+    "live" => $dt_format,
 ];
 
 $Canopy = [
@@ -76,6 +87,7 @@ $Canopy = [
     "cat" => "Разное",
     "price" => 5400,
     "img" => "img/lot-6.jpg",
+    "live" => $dt_format,
 ];
 
 $catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy]
