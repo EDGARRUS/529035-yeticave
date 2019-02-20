@@ -4,45 +4,45 @@ DEFAULT COLLATE UTF8_GENERAL_CI;
 
 USE yeticave;
 
-CREATE TABLE category (
+CREATE TABLE categories (
 id INT AUTO_INCREMENT PRIMARY KEY,
-category_name CHAR(100) NOT NULL
+name VARCHAR(255) NOT NULL
 )
 
-CREATE TABLE lot (
+CREATE TABLE lots (
 id INT AUTO_INCREMENT PRIMARY KEY,
-date_create DATETIME,
-name_lot CHAR(100),
-description TEXT,
-image CHAR(100),
-start_price INT,
-date_end DATETIME,
-step_price INT,
-author CHAR(100),
-winner CHAR(100),
-cat_lot CHAR(100)
+date_create DATETIME  NOT NULL,
+name VARCHAR(255) NOT NULL,
+description TEXT NOT NULL,
+image VARCHAR(255) NOT NULL,
+start_bet DECIMAL(18,4) NOT NULL,
+date_end DATETIME NOT NULL,
+step_bet DECIMAL(18,4) NOT NULL,
+author VARCHAR(255) NOT NULL,
+winner VARCHAR(255),
+category_id INT NOT NULL
 )
 
-CREATE TABLE price (
+CREATE TABLE bets (
 id INT AUTO_INCREMENT PRIMARY KEY,
-date_price INT,
-user_price INT,
-user_name CHAR(100),
-name_lot CHAR(100)
+created_at DATETIME NOT NULL,
+amount DECIMAL(18,4) NOT NULL,
+user_id INT NOT NULL,
+lot_id INT NOT NULL
 )
 
 CREATE TABLE users (
 id INT AUTO_INCREMENT PRIMARY KEY,
-date_registr DATETIME,
-email CHAR(200),
-user_name CHAR(200),
-user_pass CHAR(100),
-user_avatar CHAR,
-user_contact INT
+date_registr DATETIME NOT NULL,
+email VARCHAR(255) NOT NULL,
+name VARCHAR(255) NOT NULL,
+pass VARCHAR(255) NOT NULL,
+image VARCHAR(255),
+phone INT NOT NULL
 )
 
-CREATE UNIQUE INDEX cat ON category(category_name);
-CREATE INDEX l_name ON lot(name_lot);
+CREATE UNIQUE INDEX cat_name ON categories(name);
+CREATE INDEX l_name ON lots(name);
 CREATE UNIQUE INDEX u_email ON users(email);
-CREATE UNIQUE INDEX u_name ON users(user_name);
-CREATE UNIQUE INDEX u_contact ON users(user_contact);
+CREATE UNIQUE INDEX u_name ON users(name);
+CREATE UNIQUE INDEX u_phone ON users(phone);
