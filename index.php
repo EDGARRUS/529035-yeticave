@@ -9,7 +9,7 @@ if ($result) {
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-$sql = 'SELECT TIMEDIFF(lots.date_end, lots.date_create) as live, lots.date_create, lots.name, lots.start_price, lots.image, categories.name as cat FROM lots LEFT JOIN categories ON lots.category_id = categories.id ORDER BY lots.date_create DESC LIMIT 9;';
+$sql = 'SELECT TIMEDIFF(lots.date_end, NOW()) as live, lots.date_create, lots.name, lots.start_price, lots.image, categories.name as cat FROM lots LEFT JOIN categories ON lots.category_id = categories.id ORDER BY lots.date_create DESC LIMIT 9;';
 $result = mysqli_query($link, $sql);
 
 if ($result) {
