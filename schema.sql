@@ -39,8 +39,6 @@ name VARCHAR(255) NOT NULL,
 pass VARCHAR(255) NOT NULL,
 image VARCHAR(255),
 phone INT NOT NULL,
-lots_id INT,
-bets_id INT
 );
 
 CREATE UNIQUE INDEX cat_name ON categories(name); -- создаю индексы

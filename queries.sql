@@ -27,9 +27,6 @@ VALUES
 ('2019-02-25 15:00:00', '15000', '1', '1'),
 ('2019-02-28 12:00:00', '17500', '2', '1');
 
-UPDATE users SET bets_id = (SELECT id FROM bets WHERE bets.user_id = users.id) WHERE bets_id = null; -- хочу автоматически обновить поля у юзеров
-UPDATE users SET lots_id = (SELECT id FROM lots WHERE lots.author_id = users.id) WHERE lots_id = null;
-
 SELECT * FROM categories; -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;
 SELECT lots.name, lots.start_price, lots.image, bets.amount, categories.name FROM lots -- беру поля
 LEFT JOIN categories ON lots.category_id = categories.id -- присоединяю таблицу категории
