@@ -54,7 +54,7 @@
             <!--заполните этот список из массива категорий-->
             <?php foreach($menu as $value): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?php echo $value; ?></a>
+                    <a href="index.php?cat_id=<?= $value['id']; ?>"><?php echo $value['name']; ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

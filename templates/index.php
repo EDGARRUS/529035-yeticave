@@ -6,7 +6,7 @@
         <!--заполните этот список из массива категорий-->
         <?php foreach($menu as $value): ?>
             <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html"><?php echo $value; ?></a>
+                <a class="promo__link" href="index.php?cat_id=<?= $value['id']; ?>"><?php echo $value['name']; ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -17,10 +17,10 @@
     </div>
     <ul class="lots__list">
         <!--заполните этот список из массива с товарами-->
-        <?php foreach ($menu_list as $key => $value): ?>
+        <?php foreach ($menu_list as $value): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?php echo $value["img"];?>" width="350" height="260" alt="">
+                    <img src="<?php echo $value["image"];?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
                     <span class="lot__category"><?php echo $value["cat"];?></span>
@@ -28,10 +28,10 @@
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?php echo htmlspecialchars(format_price($value["price"]));?></span>
+                            <span class="lot__cost"><?php echo htmlspecialchars(format_price($value["start_price"]));?></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?php echo $value["live"]; ?>
+                            <?php echo $value['live'];?>
                         </div>
                     </div>
                 </div>

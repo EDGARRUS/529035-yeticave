@@ -28,21 +28,22 @@ function include_template($name, $data) {
     return $result;
 }
 
-date_default_timezone_set("Europe/Moscow");
-$dt_end = date_create("tomorrow");
-$dt_now = date_create("now");
-$dt_diff = date_diff($dt_end, $dt_now);
-$dt_format = date_interval_format($dt_diff, "%H:%I");
+function live_lot($date_end, $date_create) {
+    date_default_timezone_set("Europe/Moscow");
+    $dt_diff = date_diff($date_end, $date_create);
+    $dt_format = date_interval_format($dt_diff, "%H:%I");
+    return $dt_format;
+}
 
 $is_auth = rand(0, 1);
 
 $user_name = 'EDUARD'; // укажите здесь ваше имя
 
-$catalog_easy = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+//$catalog_easy = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
 $index = 0;
 $num_count = count($catalog_easy);
 
-$Rossignol = [
+/*$Rossignol = [
     "name" => "2014 Rossignol District Snowboard",
     "cat" => "Доски и лыжи",
     "price" => 10999,
@@ -90,6 +91,6 @@ $Canopy = [
     "live" => $dt_format,
 ];
 
-$catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy]
+$catalog_list = [$Rossignol, $Ply, $Union, $Charocal_bot, $Charocal_cur, $Canopy]*/
 
 ?>
