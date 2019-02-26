@@ -27,11 +27,11 @@ VALUES
 ('2019-02-25 15:00:00', '15000', '1', '1'),
 ('2019-02-28 12:00:00', '17500', '2', '1');
 
-SELECT * FROM categories; -- получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;
+SELECT * FROM categories;
 SELECT lots.name, lots.start_price, lots.image, bets.amount, categories.name FROM lots -- беру поля
 LEFT JOIN categories ON lots.category_id = categories.id -- присоединяю таблицу категории
 LEFT JOIN bets ON lots.id = bets.lot_id -- присоединяю таблицу ставок
-WHERE lots.winner_id = null; -- проверка, что нет победителя
+WHERE lots.winner_id is null; -- проверка, что нет победителя
 
 SELECT * FROM lots -- показать лот по его id. Получите также название категории, к которой принадлежит лот
 LEFT JOIN categories ON lots.category_id = categories.id
