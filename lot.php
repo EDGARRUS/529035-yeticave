@@ -35,7 +35,7 @@ if ($result = mysqli_query($link, $sql)) {
 }
 
 
-$layout_content = include_template('layout.php', ["content" => $page_content, "title" => "Главная", "menu" => $categories]);
+$layout_content = include_template('layout.php', ["content" => $page_content, "title" => $lot['name'], "menu" => $categories]);
 echo $layout_content;
 
 ?>
