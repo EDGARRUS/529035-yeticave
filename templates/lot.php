@@ -1,4 +1,14 @@
- <section class="lot-item container">
+<main>
+    <nav class="nav">
+        <ul class="nav__list container">
+            <?php foreach($menu as $value): ?>
+                <li class="nav__item">
+                    <a href="index.php?cat_id=<?= $value['id']; ?>"><?php echo $value['name']; ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+    <section class="lot-item container">
             <h2><?=htmlspecialchars($lot['name']);?></h2>
             <div class="lot-item__content">
                 <div class="lot-item__left">
@@ -16,10 +26,10 @@
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Текущая цена</span>
-                                <span class="lot-item__cost">10 999</span>
+                                <span class="lot-item__cost"><?php echo htmlspecialchars(format_price($lot['now_price']));?></span>
                             </div>
                             <div class="lot-item__min-cost">
-                                Мин. ставка <span>12 000 р</span>
+                                Мин. ставка <span><?php echo htmlspecialchars(format_price($lot['future_price']));?></span>
                             </div>
                         </div>
                         <!--<form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
@@ -89,3 +99,4 @@
                 </div>
             </div>
         </section>
+</main>
