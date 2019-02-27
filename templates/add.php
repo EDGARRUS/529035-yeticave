@@ -24,13 +24,10 @@
             <div class="form__item <?=$classname;?>">
                 <label for="category">Категория</label>
                 <select id="category" name="category" required>
-                    <option>Выберите категорию</option>
-                    <option>Доски и лыжи</option>
-                    <option>Крепления</option>
-                    <option>Ботинки</option>
-                    <option>Одежда</option>
-                    <option>Инструменты</option>
-                    <option>Разное</option>
+                    <option value="">Выберите категорию</option>
+                    <?php foreach ($menu as $cat): ?>
+                    <option value="<?=$cat['id'] ?>"><?=$cat['name']; ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <span class="form__error"><?=$dict['category'];?></span>
             </div>
