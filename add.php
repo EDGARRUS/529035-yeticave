@@ -9,20 +9,21 @@ if ($result) {
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+//Проверка на заполненность полей
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lot = $_POST;
-    $required_fields = ['lot-name', 'category', 'message', 'lot-rate', 'lot-step', 'lot-date'];
+    $required_fields = ['name', 'categories', 'description', 'start_price', 'step_price', 'date_end'];
     $errors = [];
-    $dict = ['lot-name' => 'Введите наименование лота', 'category' => 'Выберите категорию', 'message' => 'Напишите описание лота', 'lot-rate' => 'Введите начальную цену', 'lot-step' => 'Введите шаг ставки', 'lot-date' => 'Введите дату завершения торгов'];
+    $dict = ['name' => 'Введите наименование лота', 'categories' => 'Выберите категорию', 'description' => 'Напишите описание лота', 'start_price' => 'Введите начальную цену', 'step_price' => 'Введите шаг ставки', 'date_end' => 'Введите дату завершения торгов'];
     foreach ($required_fields as $field) {
         if (empty($_POST[$field])) {
             $errors[$field] = 'Ошибка';
         }
     }
-
-    if (isset($_FILES['lot-image']['name'])) {
+//Проверка на загрузку файла
+    if (isset($_FILES['image']['name'])) {
         $tmp_name = $_FILES['lot-image']['tmp_name'];
-        $path = $_FILES['lot-image']['name'];
+        $path = $_FILES['image']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
 
@@ -37,18 +38,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     else {
         $errors['file'] = 'Вы не загрузили файл';
     }
-
+//Подсчет ошибок
     if (count($errors)) {
-        $page_content = include_template('add.php', ['lot' => $lot, 'errors' => $errors, 'dict' => $dict, "menu" => $categories]);
+        $page_content = include_template('add.php', ['lot' => $lot, 'errors' => $errors, 'dict' => $dict, 'menu' => $categories]);
     }
 
     else {
-        $page_content = include_template('lot.php', ['lot' => $lot, "menu" => $categories]);
+        $page_content = include_template('add.php', ['lot' => $lot, 'menu' => $categories]);
     }
 }
 
 else {
-    $page_content = include_template('add.php', []);
+    $page_content = include_template('add.php', ['lot' => $lot, 'menu' => $categories]);
 }
 
 $layout_content = include_template('layout.php', ["content" => $page_content, "title" => "Добавление лота", "menu" => $categories]);
