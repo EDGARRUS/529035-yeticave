@@ -10,7 +10,7 @@ if ($result) {
 }
 
 $tpl_data = [];
-
+/* Делаю регистрацию */
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST;
     $errors = [];
