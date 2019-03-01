@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
 //Подсчет ошибок
     if (empty($errors)) {
 
-        $sql = 'INSERT INTO lots (date_create, category_id, date_end, name, description, start_price, step_price, image) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO lots (date_create, category_id, date_end, name, description, start_price, step_price, image, author_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, 2)';
         $stmt = db_get_prepare_stmt($link, $sql, [$lot['category_id'], $lot['date_end'], $lot['name'], $lot['description'], $lot['start_price'], $lot['step_price'], $lot['image']]);
         $res = mysqli_stmt_execute($stmt);
 
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
     }
 }
 
-$page_content = include_template('add.php', ['menu' => $categories, 'errors' => $errors, 'dict' => $dict, '$stmt'=>$stmt, '$sql'=>$sql]);
+$page_content = include_template('add.php', ['menu' => $categories, 'errors' => $errors, 'dict' => $dict, 'stmt'=>$stmt, 'sql'=>$sql]);
 $layout_content = include_template('layout.php', ["content" => $page_content, "title" => "Добавление лота", "menu" => $categories]);
 echo $layout_content;
 
