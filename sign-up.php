@@ -17,21 +17,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dict = ['name' => 'Введите имя', 'pass' => 'Введите пароль', 'email' => 'Введите email', 'phone' => 'Введите контактные данные', 'form' => 'Пожалуйста, исправьте ошибки в форме.'];
     $req_fields = ['email', 'pass', 'name', 'phone'];
 
-  foreach ($req_fields as $field) {
+    foreach ($req_fields as $field) {
         if (empty($form[$field])) {
             $errors[$field] = "Не заполнено поле";
-        } }
+        }
+    }
 
 
-    if (filter_var($form['email'],FILTER_VALIDATE_EMAIL)) {
+    if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
 
     } else {
         $errors [] = 'Неправильный формат email';
 
     }
 
-   //Проверка на загрузку файла
-    if (isset($_FILES['image']['name'])) {
+    //Проверка на загрузку файла
+    if (!empty($_FILES['image']['name'])) {
         $tmp_name = $_FILES['image']['tmp_name'];
         $path = $_FILES['image']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -42,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             move_uploaded_file($tmp_name, 'img/' . $path);
             $form['image'] = 'img/' . $path;
-        } }
-
+        }
+    }
 
 
     if (empty($errors)) {
@@ -53,16 +54,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         if (mysqli_num_rows($res) > 0) {
-        $errors['duplicate'] = 'Пользователь с этим email уже зарегистрирован';
+            $errors['duplicate'] = 'Пользователь с этим email уже зарегистрирован';
         } else {
-        $password = password_hash($form['pass'], PASSWORD_DEFAULT);
+            $password = password_hash($form['pass'], PASSWORD_DEFAULT);
+            if (!empty($_FILES['image']['name'])) {
+                $sql = 'INSERT INTO users (date_registr, email, name, pass, phone, image) VALUES (NOW(), ?, ?, ?, ?, ?)';
+                $stmt = db_get_prepare_stmt($link, $sql, [$form['email'], $form['name'], $password, $form['phone'], $form['image']]);
+                $res = mysqli_stmt_execute($stmt);
+            } else {
+                $sql = 'INSERT INTO users (date_registr, email, name, pass, phone) VALUES (NOW(), ?, ?, ?, ?)';
+                $stmt = db_get_prepare_stmt($link, $sql, [$form['email'], $form['name'], $password, $form['phone']]);
+                $res = mysqli_stmt_execute($stmt);
 
-        $sql = 'INSERT INTO users (date_registr, email, name, pass, phone, image) VALUES (NOW(), ?, ?, ?, ?, ?)';
-        $stmt = db_get_prepare_stmt($link, $sql, [$form['email'], $form['name'], $password, $form['phone'], $form['image']]);
-        $res = mysqli_stmt_execute($stmt);
-        } }
+            }
+        }
+    }
 
-   if ($res && empty($errors)) {
+    if ($res && empty($errors)) {
         header("Location: /index.php");
         exit();
     }
