@@ -18,33 +18,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     foreach ($req_fields as $field) {
         if (empty($form[$field])) {
-            $errors['email'] = "Не заполнен email";
-            $errors['pass'] = "Не заполнен пароль";
+            $errors[$field] = "Не заполнено поле";
         }
     }
 
+    if (!empty($form['email'])) {
+        $email = mysqli_real_escape_string($link, $form['email']);
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $res = mysqli_query($link, $sql);
 
-    if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
+        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
-    } else {
-        $errors ['email'] = 'Неправильный формат email';
-
-    }
-
-    $email = mysqli_real_escape_string($link, $form['email']);
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $res = mysqli_query($link, $sql);
-
-    $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-
-    if (!count($errors) and $user) {
-        if (password_verify($form['pass'], $user['pass'])) {
-            $_SESSION['user'] = $user;
+        if (!count($errors) and $user) {
+            if (password_verify($form['pass'], $user['pass'])) {
+                $_SESSION['user'] = $user;
+            } else {
+                $errors['pass'] = 'Неверный пароль';
+            }
         } else {
-            $errors['pass'] = 'Неверный пароль';
+            $errors['email'] = 'Такой пользователь не найден';
         }
-    } else {
-        $errors['email'] = 'Такой пользователь не найден';
     }
 
     if (count($errors)) {

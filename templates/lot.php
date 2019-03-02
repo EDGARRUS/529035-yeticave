@@ -32,16 +32,18 @@
                                 Мин. ставка <span><?php echo htmlspecialchars(format_price($lot['future_price']));?></span>
                             </div>
                         </div>
-                        <!--<form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+                        <?php if(isset($_SESSION[user])): ?>
+                        <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
                             <p class="lot-item__form-item form__item form__item--invalid">
                                 <label for="cost">Ваша ставка</label>
                                 <input id="cost" type="text" name="cost" placeholder="12 000">
-                                <span class="form__error">Введите наименование лота</span>
+                                <span class="form__error">Введите ставку</span>
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
-                        </form>-->
+                        </form>
+                        <?php endif ?>
                     </div>
-                    <!--<div class="history">
+                    <div class="history">
                         <h3>История ставок (<span>10</span>)</h3>
                         <table class="history__list">
                             <tr class="history__item">
@@ -95,7 +97,7 @@
                                 <td class="history__time">19.03.17 в 10:20</td>
                             </tr>
                         </table>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </section>

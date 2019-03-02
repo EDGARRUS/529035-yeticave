@@ -13,7 +13,7 @@
     <header class="main-header">
         <div class="main-header__container container">
             <h1 class="visually-hidden">YetiCave</h1>
-            <a class="main-header__logo">
+            <a class="main-header__logo" href="/">
                 <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
             <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru">
@@ -25,7 +25,10 @@
             <nav class="user-menu">
                 <?php if (isset($_SESSION['user'])) { ?>
                     <div class="user-menu__logged">
-                        <p><?= $username; ?></p>
+                        <div style="width:50px;height:50px">
+                        <img src="<?php echo $_SESSION['user']['image'];?>" width="100%" height="auto"></div>
+                        <p><?php echo $_SESSION['user']['name']; ?></p>
+                        <a href="logout.php">Выйти</a>
                     </div>
                 <?php } else { ?>
                     <ul class="user-menu__list">
@@ -44,7 +47,6 @@
 
         <?php echo $content; ?>
 </div>
-
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">

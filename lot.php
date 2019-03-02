@@ -1,6 +1,7 @@
 <?php
 
 require_once 'init.php';
+session_start();
 
 $sql = 'SELECT `id`, `name` FROM categories';
 $result = mysqli_query($link, $sql);
@@ -35,7 +36,7 @@ if ($result = mysqli_query($link, $sql)) {
 }
 
 
-$layout_content = include_template('layout.php', ["content" => $page_content, "title" => $lot['name'], "menu" => $categories]);
+$layout_content = include_template('layout.php', ["content" => $page_content, "title" => $lot['name'], "menu" => $categories, $_SESSION['user']]);
 echo $layout_content;
 
 ?>

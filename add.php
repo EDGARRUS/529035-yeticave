@@ -2,6 +2,13 @@
 
 require_once 'init.php';
 
+session_start();
+
+if(!isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
+
 $sql = 'SELECT `id`, `name` FROM categories';
 $result = mysqli_query($link, $sql);
 
