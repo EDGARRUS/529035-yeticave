@@ -26,8 +26,8 @@
                 <?php if (isset($_SESSION['user'])) { ?>
                     <div class="user-menu__logged">
                         <div style="width:50px;height:50px">
-                        <img src="<?php echo $_SESSION['user']['image'];?>" width="100%" height="auto"></div>
-                        <p><?php echo $_SESSION['user']['name']; ?></p>
+                        <img src="<?php echo strip_tags($_SESSION['user']['image']);?>" width="100%" height="auto"></div>
+                        <p><?php echo strip_tags($_SESSION['user']['name']); ?></p>
                         <a href="logout.php">Выйти</a>
                     </div>
                 <?php } else { ?>
