@@ -32,12 +32,13 @@
                                 Мин. ставка <span><?php echo htmlspecialchars(format_price($lot['future_price']));?></span>
                             </div>
                         </div>
-                        <?php if(isset($_SESSION[user])): ?>
-                        <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-                            <p class="lot-item__form-item form__item form__item--invalid">
+                        <?php if(isset($_SESSION['user'])): ?>
+                            <?php $classname = isset($errors['amount']) ? "form__item--invalid" : "";?>
+                        <form class="lot-item__form" action="add_bet.php?id=<?php echo $lot['id'];?>" method="post">
+                            <p class="lot-item__form-item form__item <?php echo $classname;?>">
                                 <label for="cost">Ваша ставка</label>
-                                <input id="cost" type="text" name="cost" placeholder="12 000">
-                                <span class="form__error">Введите ставку</span>
+                                <input id="cost" type="number" name="amount" placeholder="<?php echo htmlspecialchars(format_price($lot['future_price']));?>">
+                                <span class="form__error"></span>
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
                         </form>
