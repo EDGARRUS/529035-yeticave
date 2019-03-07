@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (filter_var($form['email'], FILTER_VALIDATE_EMAIL)) {
 
     } else {
-        $errors [] = 'Неправильный формат email';
+        $errors ['email'] = 'Неправильный формат email';
 
     }
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
 
-        if ($file_type !== "image/jpeg") {
+        if ($file_type !== "image/jpeg" or $file_type !== "image/png") {
             $errors['file'] = 'Загрузите картинку в формате JPG';
         } else {
             move_uploaded_file($tmp_name, 'img/' . $path);
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-$page_content = include_template('sign-up.php', ["menu" => $categories, "errors" => $errors, 'dict' => $dict, 'form' => $form]);
+$page_content = include_template('sign-up.php', ["menu" => $categories, "errors" => $errors, 'dict' => $dict, 'form' => $form, $_POST]);
 $layout_content = include_template('layout.php', ["content" => $page_content, "title" => "Регистрация пользователя", "menu" => $categories]);
 echo $layout_content;
 

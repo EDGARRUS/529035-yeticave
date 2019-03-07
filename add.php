@@ -29,6 +29,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
         }
     }
 
+    if($lot['start_price'] <= 0) {
+        $errors['start_price'] = 'Неверная цена';
+    }
+
+    if($lot['step_price'] <= 0) {
+        $errors['step_price'] = 'Неверная цена';
+    }
+
+    if(!is_numeric($lot['start_price']) and !is_int($lot['start_price'])) {
+        $errors['start_price'] = 'Некорректная цена';
+    }
+
+    if(!is_numeric($lot['step_price']) and !is_int($lot['step_price'])) {
+        $errors['step_price'] = 'Некорректная ставка';
+    }
+
+
+    if(strtotime($lot['date_end']) < strtotime('+1 day', strtotime('NOW'))) {
+        $errors['date_1'] = 'Неверная дата';
+    }
+
+    if(check_date_format(date('d.m.Y', strtotime($lot['date_end'])))) {
+        $errors['date_2'] = 'Неверная дата';
+    }
+
+
+
+
+
+
 //Проверка на загрузку файла
     if (isset($_FILES['image']['name'])) {
         $tmp_name = $_FILES['image']['tmp_name'];
@@ -36,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $file_type = finfo_file($finfo, $tmp_name);
 
-        if ($file_type !== "image/jpeg") {
-            $errors['file'] = 'Загрузите картинку в формате JPEG';
+        if ($file_type !== "image/jpeg" and $file_type !== "image/png") {
+            $errors['file'] = 'Загрузите картинку в формате JPEG или PNG';
         } else {
             move_uploaded_file($tmp_name, 'img/' . $path);
             $lot['image'] = 'img/' . $path;
@@ -57,10 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
 
             header("Location: lot.php?id=" . $lot_id);
         }
+    } else {
+        $page_content = include_template('add.php', ['menu' => $categories, 'lot' => $lot, 'errors' => $errors, 'dict' => $dict]);
     }
+} else {
+    $page_content = include_template('add.php', ['menu' => $categories]);
 }
 
-$page_content = include_template('add.php', ['menu' => $categories, 'errors' => $errors, 'dict' => $dict, 'stmt'=>$stmt, 'sql'=>$sql]);
+
 $layout_content = include_template('layout.php', ["content" => $page_content, "title" => "Добавление лота", "menu" => $categories]);
 echo $layout_content;
 

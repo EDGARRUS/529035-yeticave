@@ -10,7 +10,7 @@ if ($result) {
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-$sql = 'SELECT TIMEDIFF(lots.date_end, NOW()) as live, lots.id, lots.date_create, lots.name, lots.start_price, lots.image, categories.name as cat FROM lots LEFT JOIN categories ON lots.category_id = categories.id WHERE lots.winner_id is null ORDER BY lots.date_create DESC LIMIT 9;';
+$sql = 'SELECT lots.date_end, lots.id, lots.date_create, lots.name, lots.start_price, lots.image, categories.name as cat FROM lots LEFT JOIN categories ON lots.category_id = categories.id WHERE lots.winner_id is null AND lots.date_end > NOW() ORDER BY lots.date_create DESC LIMIT 9;';
 $result = mysqli_query($link, $sql);
 
 if ($result) {

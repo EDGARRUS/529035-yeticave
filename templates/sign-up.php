@@ -60,5 +60,4 @@
     <button type="submit" class="button">Зарегистрироваться</button>
     <a class="text-link" href="login.php">Уже есть аккаунт</a>
 </form>
-    <?php var_dump($errors);?>
 </main>

@@ -83,11 +83,4 @@
         <?php endif; ?>
         <button type="submit" class="button">Добавить лот</button>
     </form>
-    <?php echo var_dump($errors);?>
-    <p>Новое</p>
-    <?php echo var_dump($_POST);?>
-    <p>Новое</p>
-    <?php echo var_dump($sql);?>
-    <p>Новое</p>
-    <?php echo var_dump($stmt);?>
 </main>

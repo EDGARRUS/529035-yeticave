@@ -15,9 +15,9 @@ date_create DATETIME  NOT NULL,
 name VARCHAR(255) NOT NULL,
 description TEXT NOT NULL,
 image VARCHAR(255) NOT NULL,
-start_price DECIMAL(18,4) NOT NULL,
+start_price DECIMAL(18) NOT NULL,
 date_end DATETIME NOT NULL,
-step_price DECIMAL(18,4) NOT NULL,
+step_price DECIMAL(18) NOT NULL,
 author_id INT NOT NULL,
 winner_id INT,
 category_id INT NOT NULL
@@ -26,7 +26,7 @@ category_id INT NOT NULL
 CREATE TABLE bets (
 id INT AUTO_INCREMENT PRIMARY KEY,
 created_at DATETIME NOT NULL,
-amount DECIMAL(18,4) NOT NULL,
+amount DECIMAL(18) NOT NULL,
 user_id INT NOT NULL,
 lot_id INT NOT NULL
 );
@@ -38,7 +38,7 @@ email VARCHAR(255) NOT NULL,
 name VARCHAR(255) NOT NULL,
 pass VARCHAR(255) NOT NULL,
 image VARCHAR(255),
-phone INT NOT NULL,
+phone VARCHAR(255) NOT NULL,
 );
 
 CREATE UNIQUE INDEX cat_name ON categories(name); -- создаю индексы

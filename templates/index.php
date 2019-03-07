@@ -32,7 +32,7 @@
                             <span class="lot__cost"><?php echo htmlspecialchars(format_price($value["start_price"]));?></span>
                         </div>
                         <div class="lot__timer timer">
-                            <?php echo $value['live'];?>
+                            <?php echo calc_time_to_end(strtotime($value['date_end']));?>
                         </div>
                     </div>
                 </div>
