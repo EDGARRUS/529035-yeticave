@@ -37,16 +37,6 @@ function check_date_format($date) {
     return $result;
 }
 
-function dt_interval($date_end)
-{
-    $dt_end = date_create($date_end);
-    $dt_now = date_create("now");
-    $dt_diff = date_diff($dt_end, $dt_now);
-    $time_count = date_interval_format($dt_diff, "%H:%i");
-
-    return $time_count;
-}
-
 /**
  * Функция правильного окончания передаваемых слов в зависимости от передаваемого количества
  *
