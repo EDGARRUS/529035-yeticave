@@ -16,7 +16,7 @@
     <div class="form__item <?=$classname;?>"> <!-- form__item--invalid -->
         <label for="email">E-mail*</label>
         <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=$value;?>">
-        <span class="form__error"><?=$dict['email'];?><?=$errors['duplicate'];?></span>
+        <span class="form__error"><?=$dict['email'];?></span>
     </div>
     <?php $classname = isset($errors['pass']) ? "form__item--invalid" : "";
     $value = isset($form['pass']) ? $form['pass'] : ""; ?>

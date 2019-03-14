@@ -9,24 +9,27 @@ if(!isset($_SESSION['user'])) {
     exit();
 }
 
-$sql = 'SELECT `id`, `name` FROM categories';
-$result = mysqli_query($link, $sql);
-
-if ($result) {
-    $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
+$categories = menu_categories($link);
 
 //Проверка на заполненность полей
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сделан пост запрос
     $lot = $_POST; //Передаю значения в лот
     $required_fields = ['name', 'category_id', 'description', 'start_price', 'step_price', 'date_end']; //задаю массив необходимых полей
     $errors = []; //создаю пустой массив с ошибками
-    $dict = ['name' => 'Введите наименование лота', 'categories' => 'Выберите категорию', 'description' => 'Напишите описание лота', 'start_price' => 'Введите начальную цену', 'step_price' => 'Введите шаг ставки', 'date_end' => 'Введите дату завершения торгов', 'form' => 'Пожалуйста, исправьте ошибки в форме.']; //задаю появляющийся текст при ошибки конкретного поля
+    $dict = ['name' => 'Введите наименование лота', 'category_id' => 'Выберите категорию', 'description' => 'Напишите описание лота', 'start_price' => 'Введите начальную цену', 'step_price' => 'Введите шаг ставки', 'date_end' => 'Введите дату завершения торгов', 'form' => 'Пожалуйста, исправьте ошибки в форме.']; //задаю появляющийся текст при ошибки конкретного поля
 
     foreach ($required_fields as $field) { //прохожусь циклом по полям в поиске пустого
         if (empty($_POST[$field])) {
             $errors[$field] = 'Ошибка';
         }
+
+        if($field === 'category_id') {
+            $lot[$field] = (int)$lot[$field];
+
+            if ($lot[$field] < 1) {
+                $errors['category_id'] = 'Выберите категорию';
+            }
+    }
     }
 
     if($lot['start_price'] <= 0) {
@@ -45,22 +48,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
         $errors['step_price'] = 'Некорректная ставка';
     }
 
-
-    if(strtotime($lot['date_end']) < strtotime('+1 day', strtotime('NOW'))) {
-        $errors['date_1'] = 'Неверная дата';
+    if (!check_category_value($categories, $lot['category_id'])) {
+        $errors['category_id'] = 'Ошибка ID категории';
     }
 
-    if(check_date_format(date('d.m.Y', strtotime($lot['date_end'])))) {
-        $errors['date_2'] = 'Неверная дата';
+    if (check_date_format($lot['date_end']) === false) {
+        $errors['date_2'] = 'Введите дату в формате дд.мм.гггг';
+    } else {
+        $right_lot['date_end'] = date('Y-m-d', strtotime($lot['date_end']));
+
+        if(strtotime($right_lot['date_end']) < strtotime('+1 day', strtotime('NOW'))) {
+            $errors['date_1'] = 'Неверная дата';
+        }
     }
-
-
-
-
 
 
 //Проверка на загрузку файла
-    if (isset($_FILES['image']['name'])) {
+    if (!empty($_FILES['image']['name'])) {
         $tmp_name = $_FILES['image']['tmp_name'];
         $path = $_FILES['image']['name'];
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -77,16 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
     }
 //Подсчет ошибок
     if (empty($errors)) {
-
-        $sql = 'INSERT INTO lots (date_create, category_id, date_end, name, description, start_price, step_price, image, author_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, 2)';
-        $stmt = db_get_prepare_stmt($link, $sql, [$lot['category_id'], $lot['date_end'], $lot['name'], $lot['description'], $lot['start_price'], $lot['step_price'], $lot['image']]);
-        $res = mysqli_stmt_execute($stmt);
-
-        if ($res) {
-            $lot_id = mysqli_insert_id($link);
-
-            header("Location: lot.php?id=" . $lot_id);
-        }
+        $lot['author_id'] = $_SESSION['user']['id'];
+        $lot_data = [$lot['category_id'], $right_lot['date_end'], $lot['name'], $lot['description'], $lot['start_price'], $lot['step_price'], $lot['image'], $lot['author_id']];
+        add_lot($lot_data, $link);
     } else {
         $page_content = include_template('add.php', ['menu' => $categories, 'lot' => $lot, 'errors' => $errors, 'dict' => $dict]);
     }

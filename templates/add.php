@@ -29,7 +29,7 @@
                     <option value="<?=$cat['id'] ?>"><?=$cat['name']; ?></option>
                     <?php endforeach; ?>
                 </select>
-                <span class="form__error"><?=$dict['category'];?></span>
+                <span class="form__error"><?=$dict['category_id'];?></span>
             </div>
         </div>
         <?php $classname = isset($errors['description']) ? "form__item--invalid" : "";
@@ -74,7 +74,7 @@
             $value = isset($lot['date_end']) ? $lot['date_end'] : ""; ?>
             <div class="form__item <?=$classname;?>">
                 <label for="lot-date">Дата окончания торгов</label>
-                <input class="form__input-date" id="lot-date" type="date" name="date_end" value="<?=$value;?>">
+                <input class="form__input-date" id="lot-date" type="text" name="date_end" placeholder="дд.мм.гггг" value="<?=$value;?>">
                 <span class="form__error"><?=$dict['date_end'];?></span>
             </div>
         </div>

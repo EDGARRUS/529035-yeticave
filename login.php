@@ -4,12 +4,7 @@ require_once 'init.php';
 
 session_start();
 
-$sql = 'SELECT `id`, `name` FROM categories';
-$result = mysqli_query($link, $sql);
-
-if ($result) {
-    $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
+$categories = menu_categories($link);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form = $_POST;
@@ -23,12 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!empty($form['email'])) {
-        $email = mysqli_real_escape_string($link, $form['email']);
-        $sql = "SELECT * FROM users WHERE email = '$email'";
-        $res = mysqli_query($link, $sql);
-
-        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-
+        $user = user_email_finder($link,$form['email']);
         if (!count($errors) and $user) {
             if (password_verify($form['pass'], $user['pass'])) {
                 $_SESSION['user'] = $user;
