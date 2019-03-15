@@ -39,7 +39,7 @@
             <textarea id="message" name="description" placeholder="Напишите описание лота"><?=$value;?></textarea>
             <span class="form__error"><?=$dict['description'];?></span>
         </div>
-        <?php $classname = isset($errors['image']) ? "form__item--uploaded" : "";?>
+        <?php $classname = isset($errors['file']) ? "form__item--invalid" : "";?>
         <div class="form__item form__item--file <?=$classname;?>"> <!-- form__item--uploaded -->
             <label>Изображение</label>
             <div class="preview">
@@ -54,6 +54,7 @@
                     <span>+ Добавить</span>
                 </label>
             </div>
+            <span class="form__error"><?=$errors['file'];?></span>
         </div>
         <div class="form__container-three">
             <?php $classname = isset($errors['start_price']) ? "form__item--invalid" : "";
@@ -75,7 +76,7 @@
             <div class="form__item <?=$classname;?>">
                 <label for="lot-date">Дата окончания торгов</label>
                 <input class="form__input-date" id="lot-date" type="text" name="date_end" placeholder="дд.мм.гггг" value="<?=$value;?>">
-                <span class="form__error"><?=$dict['date_end'];?></span>
+                <span class="form__error"><?=$errors['date_end'];?></span>
             </div>
         </div>
         <?php if (isset($errors)): ?>

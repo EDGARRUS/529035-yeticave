@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
     $lot = $_POST; //Передаю значения в лот
     $required_fields = ['name', 'category_id', 'description', 'start_price', 'step_price', 'date_end']; //задаю массив необходимых полей
     $errors = []; //создаю пустой массив с ошибками
-    $dict = ['name' => 'Введите наименование лота', 'category_id' => 'Выберите категорию', 'description' => 'Напишите описание лота', 'start_price' => 'Введите начальную цену', 'step_price' => 'Введите шаг ставки', 'date_end' => 'Введите дату завершения торгов', 'form' => 'Пожалуйста, исправьте ошибки в форме.']; //задаю появляющийся текст при ошибки конкретного поля
+    $dict = ['name' => 'Введите наименование лота', 'category_id' => 'Выберите категорию', 'description' => 'Напишите описание лота', 'start_price' => 'Введите начальную цену', 'step_price' => 'Введите шаг ставки', 'form' => 'Пожалуйста, исправьте ошибки в форме.']; //задаю появляющийся текст при ошибки конкретного поля
 
     foreach ($required_fields as $field) { //прохожусь циклом по полям в поиске пустого
         if (empty($_POST[$field])) {
@@ -53,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Проверка, что сдел
     }
 
     if (check_date_format($lot['date_end']) === false) {
-        $errors['date_2'] = 'Введите дату в формате дд.мм.гггг';
+        $errors['date_end'] = 'Введите дату в формате дд.мм.гггг';
     } else {
         $right_lot['date_end'] = date('Y-m-d', strtotime($lot['date_end']));
 
         if(strtotime($right_lot['date_end']) < strtotime('+1 day', strtotime('NOW'))) {
-            $errors['date_1'] = 'Неверная дата';
+            $errors['date_end'] = 'Дата окончания торгов должна быть минимум на 1 день позже публикации объявления';
         }
     }
 
